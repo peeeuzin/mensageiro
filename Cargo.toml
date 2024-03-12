@@ -1,0 +1,22 @@
+[package]
+name = "wave"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.36.0", features = [
+    "macros",
+    "net",
+    "rt-multi-thread",
+    "io-std",
+    "io-util",
+    "sync",
+] }
+async-trait = "0.1.58"
+serde = { version = "1.0.197", features = ["derive"] }
+bson = "2.9.0"
+log = "0.4.21"
+chrono = "0.4.35"
+rayon = "1.9.0"
+uuid = "1.7.0"
+futures = "0.3.30"

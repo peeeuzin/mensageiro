@@ -60,17 +60,17 @@ impl Peer {
 }
 
 #[async_trait]
-pub trait Messageiro: Sync + Send + 'static {
+pub trait Mensageiro: Sync + Send + 'static {
     async fn request(&self, request: Request, uuid: Uuid) -> Response;
     async fn new_connection(&self, stream: &mut TcpStream, addr: SocketAddr) -> bool;
 }
 
-pub struct MessageiroService<T: Messageiro> {
+pub struct MensageiroService<T: Mensageiro> {
     inner: Arc<T>,
     state: Arc<RwLock<Shared>>,
 }
 
-impl<T: Messageiro> MessageiroService<T> {
+impl<T: Mensageiro> MensageiroService<T> {
     pub fn new(inner: T, state: Arc<RwLock<Shared>>) -> Self {
         let inner = Arc::new(inner);
 
@@ -78,7 +78,7 @@ impl<T: Messageiro> MessageiroService<T> {
     }
 }
 
-impl<T: Messageiro> Clone for MessageiroService<T> {
+impl<T: Mensageiro> Clone for MensageiroService<T> {
     fn clone(&self) -> Self {
         Self {
             inner: self.inner.clone(),
@@ -87,12 +87,12 @@ impl<T: Messageiro> Clone for MessageiroService<T> {
     }
 }
 
-pub struct Server<T: Messageiro> {
-    svc: MessageiroService<T>,
+pub struct Server<T: Mensageiro> {
+    svc: MensageiroService<T>,
 }
 
-impl<T: Messageiro> Server<T> {
-    pub fn new(svc: MessageiroService<T>) -> Self {
+impl<T: Mensageiro> Server<T> {
+    pub fn new(svc: MensageiroService<T>) -> Self {
         Self { svc }
     }
 

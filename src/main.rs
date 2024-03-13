@@ -11,13 +11,13 @@ use rayon::{ThreadPool, ThreadPoolBuilder};
 use server::*;
 use tokio::{net::TcpStream, sync::RwLock};
 
-struct MessageiroServer {
+struct MensageiroServer {
     core: core::Core,
     pool: ThreadPool,
 }
 
 #[async_trait]
-impl Messageiro for MessageiroServer {
+impl Mensageiro for MensageiroServer {
     async fn request(&self, request: Request, uuid: uuid::Uuid) -> Response {
         self.pool
             .install(move || futures::executor::block_on(self.core.handle_request(request, uuid)))
@@ -43,12 +43,12 @@ pub async fn initialize_server() {
     let pool = ThreadPoolBuilder::new().num_threads(4).build().unwrap();
     let state = Arc::new(RwLock::new(Shared::new()));
 
-    let messageiro_server = MessageiroServer {
+    let mensageiro_server = MensageiroServer {
         core: core::Core::new(state.clone()),
         pool,
     };
 
-    let server = Server::new(MessageiroService::new(messageiro_server, state));
+    let server = Server::new(MensageiroService::new(mensageiro_server, state));
 
     info!("Wave is listening on port: {}", addr);
 

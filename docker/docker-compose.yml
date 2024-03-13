@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  mensageiro:
+    build:
+      dockerfile: ./docker/build/Dockerfile
+      context: ..
+      target: release
+    ports:
+      - "6572:6572"
+    environment:
+      - MENSAGEIRO_PORT=6572
+      - MENSAGEIRO_HOST=0.0.0.0
+    

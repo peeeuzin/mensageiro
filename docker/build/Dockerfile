@@ -17,7 +17,6 @@ RUN apt-get update -qq \
     bash \
     build-essential \
     libssl-dev \
-    libpq-dev \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -26,19 +25,20 @@ SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
 # We create a non-root user to run the application,
 # so that we don't run the application as root.
-RUN groupadd -g "${GID}" -r messageiro \
-    && useradd -d '/app' -g messageiro -l -r -u "${UID}" messageiro \
-    && chown messageiro:messageiro -R '/app'
+RUN groupadd -g "${GID}" -r mensageiro \
+    && useradd -d '/app' -g mensageiro -l -r -u "${UID}" mensageiro \
+    && chown mensageiro:mensageiro -R '/app'
 
-USER messageiro
+USER mensageiro
 
-COPY --chown=messageiro:messageiro Cargo.toml /app/Cargo.toml
-COPY --chown=messageiro:messageiro Rocket.toml /app/Rocket.toml
-COPY --chown=messageiro:messageiro src /app/src
+COPY --chown=mensageiro:mensageiro Cargo.toml /app/Cargo.toml
+COPY --chown=mensageiro:mensageiro src /app/src
 
 # Build the application.
 RUN cargo build --release
 
+EXPOSE 6572
+
 FROM base AS release
 
-CMD ["/app/target/release/messageiro"]
+CMD ["/app/target/release/mensageiro"]

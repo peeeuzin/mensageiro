@@ -60,17 +60,17 @@ impl Peer {
 }
 
 #[async_trait]
-pub trait Wave: Sync + Send + 'static {
+pub trait Messageiro: Sync + Send + 'static {
     async fn request(&self, request: Request, uuid: Uuid) -> Response;
     async fn new_connection(&self, stream: &mut TcpStream, addr: SocketAddr) -> bool;
 }
 
-pub struct WaveService<T: Wave> {
+pub struct MessageiroService<T: Messageiro> {
     inner: Arc<T>,
     state: Arc<RwLock<Shared>>,
 }
 
-impl<T: Wave> WaveService<T> {
+impl<T: Messageiro> MessageiroService<T> {
     pub fn new(inner: T, state: Arc<RwLock<Shared>>) -> Self {
         let inner = Arc::new(inner);
 
@@ -78,7 +78,7 @@ impl<T: Wave> WaveService<T> {
     }
 }
 
-impl<T: Wave> Clone for WaveService<T> {
+impl<T: Messageiro> Clone for MessageiroService<T> {
     fn clone(&self) -> Self {
         Self {
             inner: self.inner.clone(),
@@ -87,12 +87,12 @@ impl<T: Wave> Clone for WaveService<T> {
     }
 }
 
-pub struct Server<T: Wave> {
-    svc: WaveService<T>,
+pub struct Server<T: Messageiro> {
+    svc: MessageiroService<T>,
 }
 
-impl<T: Wave> Server<T> {
-    pub fn new(svc: WaveService<T>) -> Self {
+impl<T: Messageiro> Server<T> {
+    pub fn new(svc: MessageiroService<T>) -> Self {
         Self { svc }
     }
 

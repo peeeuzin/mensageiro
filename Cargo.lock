@@ -403,6 +403,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
 
 [[package]]
+name = "messageiro"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "bson",
+ "chrono",
+ "futures",
+ "log",
+ "rayon",
+ "serde",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
 name = "miniz_oxide"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -789,21 +804,6 @@ name = "wasm-bindgen-shared"
 version = "0.2.92"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "af190c94f2773fdb3729c55b007a722abb5384da03bc0986df4c289bf5567e96"
-
-[[package]]
-name = "wave"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "bson",
- "chrono",
- "futures",
- "log",
- "rayon",
- "serde",
- "tokio",
- "uuid",
-]
 
 [[package]]
 name = "windows-core"

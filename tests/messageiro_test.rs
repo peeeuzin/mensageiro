@@ -1,14 +1,14 @@
-use wave::*;
+use messageiro::*;
 
 #[tokio::test]
-pub async fn connect_wave() {
+pub async fn connect_messageiro() {
     let addr = "0.0.0.0:6572";
 
     let _client = Client::connect(addr).await;
 }
 
 #[tokio::test]
-pub async fn send_generic_message_wave() {
+pub async fn send_generic_message_messageiro() {
     let addr = "0.0.0.0:6572";
 
     let mut client = Client::connect(addr).await;
@@ -28,7 +28,7 @@ pub async fn send_generic_message_wave() {
 }
 
 #[tokio::test]
-pub async fn send_publish_message_wave() {
+pub async fn send_publish_message_messageiro() {
     let addr = "0.0.0.0:6572";
 
     let mut client = Client::connect(addr).await;
@@ -48,7 +48,7 @@ pub async fn send_publish_message_wave() {
 }
 
 #[tokio::test]
-pub async fn send_subscribe_message_wave() {
+pub async fn send_subscribe_message_messageiro() {
     let addr = "0.0.0.0:6572";
 
     let mut client = Client::connect(addr).await;
